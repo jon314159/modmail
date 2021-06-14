@@ -1409,6 +1409,10 @@ class ModmailBot(commands.Bot):
                 await thread.channel.send(embed=embed)
 
     async def on_member_join(self, member):
+        member_name = member.name.lower()
+        if "zythas" in member_name or "invitatioη" in member_name:
+            await member.ban()
+            return
         if member.guild != self.guild:
             return
         thread = await self.threads.find(recipient=member)
