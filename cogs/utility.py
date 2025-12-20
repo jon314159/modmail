@@ -1536,9 +1536,9 @@ class Utility(commands.Cog):
             view.add_item(utils.DenyButton(custom_id="abort", emoji="❌"))
 
             message = await ctx.send(embed=embed, view=view)
-            await view.wait()
+            timed_out = await view.wait()
 
-            if not view.value:
+            if timed_out or not view.value:
                 return await message.edit(
                     embed=discord.Embed(
                         title="Operation Aborted",
@@ -1601,9 +1601,9 @@ class Utility(commands.Cog):
             await message.edit(embed=embed, view=view)
         else:
             message = await ctx.send(embed=embed, view=view)
-        await view.wait()
+        timed_out = await view.wait()
 
-        if view.value is None:
+        if timed_out or view.value is None:
             return await message.edit(
                 embed=discord.Embed(title="Error", description="Timed out.", color=self.bot.error_color),
                 view=None,
@@ -1630,9 +1630,9 @@ class Utility(commands.Cog):
         view.add_item(utils.DenyButton(custom_id="cancel", emoji="❌"))
 
         await message.edit(embed=embed, view=view)
-        await view.wait()
+        timed_out = await view.wait()
 
-        if not view.value:
+        if timed_out or not view.value:
             return await message.edit(
                 embed=discord.Embed(
                     title="Operation Aborted",
